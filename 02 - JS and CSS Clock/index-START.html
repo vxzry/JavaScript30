@@ -12,6 +12,7 @@
         <div class="hand hour-hand"></div>
         <div class="hand min-hand"></div>
         <div class="hand second-hand"></div>
+        <div class="mid-circle"></div>
       </div>
     </div>
 
@@ -62,13 +63,70 @@
       background:black;
       position: absolute;
       top:50%;
+      transform: rotate(90deg);
+      transform-origin: 100%;
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0, 2.7, 0.87, 1.01);
+    }
+
+    .second-hand {
+      height: 2px;
+    }
+
+    .min-hand {
+      height: 8px;
+    }
+    
+    .hour-hand {
+      height: 15px;
+    }
+
+    .mid-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+      background: black;
+      border:none;
+      border-radius:50%;
+      margin-left: -12px;
+      margin-top: -6px;
     }
 
   </style>
 
   <script>
+    const secondHand = document.querySelector('.second-hand');
+    const minuteHand = document.querySelector('.min-hand');
+    const hourHand   = document.querySelector('.hour-hand');
+    const hand       = document.querySelector('.hand');
 
+    function setDate(){
+      const now     = new Date(),
 
+      seconds = now.getSeconds(),
+      minutes = now.getMinutes(),
+      hours   = now.getHours(),
+
+      secondsDegrees = ((seconds / 60) * 360) + 90,
+      minutesDegrees = ((minutes / 60) * 360) + 90,
+      hoursDegrees   = ((hours   / 12) * 360) + 90;
+
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+      minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
+      hourHand.style.transform   = `rotate(${hoursDegrees}deg)`;
+    }
+
+    window.onload = ()=>{
+      hand.style.transition = `all 1s`;
+    }
+
+    window.ontransitionend = ()=>{
+      hand.style.transition = `all 0.05s`;
+    }
+
+    setInterval(setDate, 1000);
   </script>
 </body>
 </html>
