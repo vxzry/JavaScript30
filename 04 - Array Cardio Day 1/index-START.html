@@ -31,10 +31,9 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
-    const year_filter = 1500; 
-    const filtered_inventors = inventors.filter(inventor => inventor.year >= year_filter && inventor.year < year_filter + 100);
+    const year_filter = 1500,
+          filtered_inventors = inventors.filter(inventor => inventor.year >= year_filter && inventor.year < year_filter + 100);
     console.table(filtered_inventors);
-
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
@@ -43,32 +42,51 @@
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
-    const sorted_inventors_age = inventors.sort(compareYear);
-    function compareYear(a, b){
-      console.log(a, b);
-      if(a.year > b.year)
-        return 1;
-      if(a.year < b.year)
-        return -1;
-      return 0;
-    }
-    console.table(sorted_inventors_age);
+    const sorted_inventors_birth = inventors.sort((a, b) => a.year > b.year ? 1 : (a.year < b.year ? -1 : 0));
+    console.table(sorted_inventors_birth);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    const total_age = inventors.reduce((sum, curr) => sum + (curr.passed - curr.year), 0);
+    console.log(total_age);
 
     // 5. Sort the inventors by years lived
+    const sorted_inventors_age = inventors.sort((a, b) => (a.passed - a.year) > (b.passed - b.year) ? 1 : ((a.passed - a.year) < (b.passed - b.year) ? -1 : 0));
+    console.table(sorted_inventors_age);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    /*
+    <div class="mw-category-group"><h3>C</h3>
+      <ul>
+        <li><a href="/wiki/Boulevard_des_Capucines" title="Boulevard des Capucines">Boulevard des Capucines</a></li>
+      </ul>
+    </div>
+    */
+    const boulevards = Array.from(document.querySelectorAll('.mw-category-group a')),
+          boulevard_search_string = 'de',
+          filtered_boulevards = boulevards.map(name => name.title).filter(name => name.includes(boulevard_search_string));
+    console.log(filtered_boulevards);
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const sorted_people_name = people.sort();
+    console.log(sorted_people_name);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck', 'pogostick'],
+      data_obj = data.reduce((acc, current) => {
+        if(!acc[current]){
+          // initialize value for current data to 0
+          acc[current] = 0;
+        }
+        // increment value of obj with key equal to current data
+        acc[current]++;
+        return acc;
+      }, {});
+      // {} - initial value, value to use as the first argument to the first call of the callback
+    console.log(data_obj);
 
   </script>
 </body>
