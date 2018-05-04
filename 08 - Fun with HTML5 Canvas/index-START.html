@@ -7,6 +7,56 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+  const canvas = document.querySelector('#draw'),
+        ctx = canvas.getContext('2d')
+        maxWidth = 100,
+        widthIncrement = 1
+        ;
+  let   widthMovement = true // true: right / positive, false: left / negative
+        ;
+
+  // adjust canvas width and height
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  // set context  properties    
+  ctx.strokeStyle = '#BADA55';
+  ctx.lineWidth = maxWidth;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+
+  canvas.addEventListener('mousedown', (e)=>{
+    canvas.addEventListener('mousemove', onMouseMove);
+  });
+
+  canvas.addEventListener('mouseup', (e)=>{
+    canvas.removeEventListener('mousemove', onMouseMove);
+  });
+
+
+  function onMouseMove(e){
+    ctx.lineWidth += widthMovement ? widthIncrement : (widthIncrement * -1);
+    
+    drawLine(e.x, e.y);
+
+    // change width movement
+    if(ctx.lineWidth >= maxWidth)
+      widthMovement = false;
+    if(ctx.lineWidth <= 1)
+      widthMovement = true;
+        
+    console.log(e.x, e.y);
+  }
+
+  function drawLine(x, y){
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+
+    console.log('draw');
+  }
 </script>
 
 <style>
