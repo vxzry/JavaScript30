@@ -21,6 +21,11 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    :root {
+      --spacing: 10px;
+      --blur: 10px;
+      --base: #ffc600;
+    }
 
     /*
       misc styles, nothing to do with CSS variables
@@ -42,9 +47,26 @@
     input {
       width:100px;
     }
+
+    img{
+      padding: var(--spacing);
+      background-color: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .hl{
+      color: var(--base);
+    }
   </style>
 
   <script>
+    const root   = document.documentElement,
+          inputs = document.querySelectorAll('input');
+          
+    inputs.forEach(input => input.addEventListener('input', e => {
+      root.style.setProperty(`--${e.target.id}`, `${e.target.value}${e.target.type!='color'?'px':''}`)
+    }));
+
   </script>
 
 </body>
