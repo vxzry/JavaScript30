@@ -27,6 +27,16 @@
       --base: #ffc600;
     }
 
+    img{
+      padding: var(--spacing);
+      background-color: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .hl{
+      color: var(--base);
+    }
+
     /*
       misc styles, nothing to do with CSS variables
     */
@@ -47,16 +57,6 @@
     input {
       width:100px;
     }
-
-    img{
-      padding: var(--spacing);
-      background-color: var(--base);
-      filter: blur(var(--blur));
-    }
-
-    .hl{
-      color: var(--base);
-    }
   </style>
 
   <script>
@@ -64,7 +64,7 @@
           inputs = document.querySelectorAll('input');
           
     inputs.forEach(input => input.addEventListener('input', e => {
-      root.style.setProperty(`--${e.target.id}`, `${e.target.value}${e.target.type!='color'?'px':''}`)
+      root.style.setProperty(`--${e.target.id}`, `${e.target.value}${e.target.dataset.sizing?e.target.dataset.sizing:''}`)
     }));
 
   </script>
